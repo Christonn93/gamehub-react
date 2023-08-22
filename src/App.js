@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+// Importing React
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+// Importing MUI
+import { CssBaseline, ThemeProvider } from "@mui/material";
+
+// Importing base layout
+import Layout from "./layout/Layout";
+
+// Importing Theme
+import { ColorModeContext, useMode } from "../src/style/Theme";
+
+// Importing pages
+import Home from "./routes/Home";
+import GameList from "./routes/GameList";
+import NotFound from "./routes/NotFound";
+
+const App = () => {
+ const [theme, colorMode] = useMode();
+
+ return (
+  <>
+   <ColorModeContext.Provider value={colorMode}>
+    <ThemeProvider theme={theme}>
+     <CssBaseline />
+     <Routes>
+      <Route path="/" element={<Layout />}>
+       <Route index element={<Home />} />
+       <Route path="/list" element={<GameList />} />
+       <Route path="*" element={<NotFound />} />
+      </Route>
+     </Routes>
+    </ThemeProvider>
+   </ColorModeContext.Provider>
+  </>
+ );
+};
 
 export default App;
