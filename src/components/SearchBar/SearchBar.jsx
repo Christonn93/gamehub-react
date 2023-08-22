@@ -4,7 +4,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, Checkbox, FormContr
 
 import useApi from "../../hooks/useApi";
 
-const apiKey = "f3c9bc51d79e4d47923201a9a9b5f4de";
+const apiKey = process.env.REACT_APP_API_KEY;
 
 const SearchBar = () => {
  const [age, setAge] = React.useState("");

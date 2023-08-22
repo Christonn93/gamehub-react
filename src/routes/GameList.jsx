@@ -22,7 +22,7 @@ const GameList = () => {
  const isMobile = useMediaQuery(device.breakpoints.down("sm"));
  const navigate = useNavigate();
 
- const apiKey = "f3c9bc51d79e4d47923201a9a9b5f4de";
+ const apiKey = process.env.REACT_APP_API_KEY;
 
  const { data, isLoading, isError } = useApi(`/games?key=${apiKey}&page_size=1000`, "GET");
  if (isError) return <>Error</>;
