@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 
 import { Box, Grid, IconButton, Typography, useTheme, useMediaQuery } from "@mui/material";
 
@@ -20,12 +19,12 @@ const GameList = () => {
 
  const device = useTheme();
  const isMobile = useMediaQuery(device.breakpoints.down("sm"));
- const navigate = useNavigate();
 
  const apiKey = process.env.REACT_APP_API_KEY;
 
  const { data, isLoading, isError } = useApi(`/games?key=${apiKey}&page_size=1000`, "GET");
- if (isError) return <>Error</>;
+ if (isError) return <>Error {isError}</>;
+ if (isLoading) return <>Loading</>;
 
  setTimeout(() => {
   setDataResults(data.results);

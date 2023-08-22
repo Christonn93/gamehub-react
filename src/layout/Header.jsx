@@ -17,7 +17,7 @@ const Header = () => {
     }}
    >
     <Box id="section-one">
-     <img src={Logo} height={100} />
+     <img src={Logo} height={100} alt="Logo"/>
     </Box>
     <Box id="section-two">
      <Navbar />

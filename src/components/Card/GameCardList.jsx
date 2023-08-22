@@ -1,12 +1,11 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Typography, useTheme, useMediaQuery } from "@mui/material";
 
 const GameCardList = ({ width, name, image, id, genres, platforms, tags }) => {
  const device = useTheme();
  const isMobile = useMediaQuery(device.breakpoints.down("sm"));
- const navigate = useNavigate();
 
  // Default image value if image is not matching
  const imageMissing = "https://via.placeholder.com/600x400?text=Image+missing";
@@ -59,8 +58,8 @@ const GameCardList = ({ width, name, image, id, genres, platforms, tags }) => {
      </Box>
     </CardContent>
     <CardActions>
-     <Button variant="contained" color="primary">
-      Details
+     <Button variant="contained" color="primary" component={Link} to={`/list/game/${id}`}>
+      Game details
      </Button>
     </CardActions>
    </Box>

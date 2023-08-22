@@ -10,10 +10,13 @@ import Layout from "./layout/Layout";
 
 // Importing Theme
 import { ColorModeContext, useMode } from "../src/style/Theme";
+import "../src/style/classNames.css"
+
 
 // Importing pages
 import Home from "./routes/Home";
 import GameList from "./routes/GameList";
+import GameDetails from "./routes/GameDetails";
 import NotFound from "./routes/NotFound";
 
 const App = () => {
@@ -28,6 +31,7 @@ const App = () => {
       <Route path="/" element={<Layout />}>
        <Route index element={<Home />} />
        <Route path="/list" element={<GameList />} />
+       <Route path="/list/game/:id" element={<GameDetails />} />
        <Route path="*" element={<NotFound />} />
       </Route>
      </Routes>

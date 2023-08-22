@@ -1,0 +1,24 @@
+// Importing platform emblems
+import PS4 from "../assets/platform_images/icons8-playstation.svg";
+import Windows from "../assets/platform_images/icons8-windows.svg";
+import Xbox from "../assets/platform_images/icons8-xbox.svg";
+import Nintendo from "../assets/platform_images/icons8-nintendo-switch-50.png";
+import Ios from "../assets/platform_images/icons8-ios.svg";
+import Android from "../assets/platform_images/icons8-android.svg";
+
+ // setting emblems
+ const ps4 = platformName.map((e) => e === "Playstation 4");
+ const windows = platformName.map((e) => e === "PC");
+ const xBox = platformName.map((e) => e === "Xbox Series S/X");
+ const android = platformName.map((e) => e === "Android");
+ const ios = platforms.flatMap((n) => n.platform.name == "iOS");
+ const nintendo = platformName.map((e) => e === "Nintendo Switch");
+
+ <Stack direction={"row"} gap={1}>
+ {ps4 ? <img className="platform-emblem" src={PS4} /> : <></>}
+ {windows ? <img className="platform-emblem" src={Windows} /> : <></>}
+ {xBox ? <img className="platform-emblem" src={Xbox} /> : <></>}
+ {android ? <img className="platform-emblem" src={Android} /> : <></>}
+ {ios ? <img className="platform-emblem" src={Ios} /> : <></>}
+ {nintendo ? <img className="platform-emblem" src={Nintendo} /> : <></>}
+</Stack>

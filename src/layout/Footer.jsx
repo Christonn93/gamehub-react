@@ -1,5 +1,5 @@
 // Importing React
-import React, { Link } from "react-router-dom";
+import React from "react";
 
 // Importing MUI
 import { Box, Typography } from "@mui/material";

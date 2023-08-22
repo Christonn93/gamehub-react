@@ -1,0 +1,11 @@
+.release-date {
+ max-width: fit-content;
+ background-color: #fff !important;
+ color: #000 !important;
+ padding: 0.15rem;
+}
+
+.platform-emblem {
+    max-width: 30px;
+    background-color: #fff !important;
+}

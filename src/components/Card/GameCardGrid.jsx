@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
 
@@ -12,9 +13,9 @@ const GameCardGrid = ({ width, name, image, id, genres, platforms, tags }) => {
     </Typography>
    </CardContent>
    <CardActions>
-    <Button variant="contained" color="primary">
-     Details
-    </Button>
+   <Button variant="contained" color="primary" component={Link} to={`/list/game/${id}`}>
+      Game details
+     </Button>
    </CardActions>
   </Card>
  );

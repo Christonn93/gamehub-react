@@ -2,10 +2,8 @@
 import { useEffect, useState } from "react";
 import { headers } from "../api/headers";
 
-const apiKey = "f3c9bc51d79e4d47923201a9a9b5f4de";
-
 const url = "https://api.rawg.io/api";
-const apiKeyFlag = `?key=${apiKey}`;
+
 
 /**
  * Function to call a api to receive data
@@ -19,7 +17,7 @@ const apiKeyFlag = `?key=${apiKey}`;
  *
  * @Creator Martin Kruger
  */
-const useApi = (endpoint, method, flags, body) => {
+const useApi = (endpoint, method, body) => {
  const [data, setData] = useState([]);
  const [isLoading, setIsLoading] = useState(false);
  const [isError, setIsError] = useState(false);
