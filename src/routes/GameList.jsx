@@ -1,30 +1,29 @@
 import React, { useState } from "react";
 
-import { Box, Grid, IconButton, Typography, useTheme, useMediaQuery } from "@mui/material";
+import { Box, Grid, IconButton, Skeleton, Typography } from "@mui/material";
 
 import GridViewIcon from "@mui/icons-material/GridView";
 import SplitscreenIcon from "@mui/icons-material/Splitscreen";
 
+// Importing api call hooks
 import useApi from "../hooks/useApi";
 
 // Importing components
 import SearchBar from "../components/SearchBar/SearchBar";
-import GridBase from "../components/Grid/GridBase";
-import GameCardGrid from "../components/Card/GameCardGrid";
-import GameCardList from "../components/Card/GameCardList";
+import ListSection from "../components/GameList/ListSection";
+import FilterSection from "../components/GameList/FilterSection";
 
 const GameList = () => {
  const [dataResults, setDataResults] = useState([]);
  const [layout, setLayout] = useState(false);
-
- const device = useTheme();
- const isMobile = useMediaQuery(device.breakpoints.down("sm"));
-
  const apiKey = process.env.REACT_APP_API_KEY;
 
  const { data, isLoading, isError } = useApi(`/games?key=${apiKey}&page_size=1000`, "GET");
+ const { data: platformData, isLoading: loading } = useApi(`/platforms/lists/parents?key=${apiKey}&page_size=1000`, "GET");
+ const { data: genreData } = useApi(`/genres?key=${apiKey}&page_size=1000`, "GET");
+ const { data: tagsData } = useApi(`/tags?key=${apiKey}&page_size=1000`, "GET");
+
  if (isError) return <>Error {isError}</>;
- if (isLoading) return <>Loading</>;
 
  setTimeout(() => {
   setDataResults(data.results);
@@ -32,25 +31,19 @@ const GameList = () => {
 
  if (dataResults === undefined) return null;
 
- const mobileBox = {
-  display: "flex",
-  flexDirection: "column",
-  gap: 3,
- };
-
- const desktopBox = {
-  display: "flex",
-  gap: 3,
- };
-
  return (
   <>
-   <Box>
+   <Box
+    sx={{
+     display: "flex",
+     flexDirection: "column",
+     gap: 1,
+    }}
+   >
     <Box
      sx={{
       display: "flex",
       justifyContent: "space-between",
-      marginBottom: 2,
      }}
     >
      <Typography variant="h1" component={"h1"}>
@@ -66,28 +59,37 @@ const GameList = () => {
       </IconButton>
      )}
     </Box>
-    <Box sx={!isMobile ? desktopBox : mobileBox}>
-     <Box>
-      <SearchBar />
-     </Box>
-     {layout === true ? (
-      <GridBase>
-       {dataResults.map((e) => (
-        <Grid item xs={2} sm={4} md={4} key={e.id}>
-         <GameCardGrid name={e.name} id={e.id} genres={e.genres} platforms={e.platforms} image={e.background_image} />
-        </Grid>
-       ))}
-      </GridBase>
-     ) : (
-      <GridBase>
-       {dataResults.map((e) => (
-        <Grid item xs={12} key={e.id}>
-         <GameCardList width={"100"} name={e.name} id={e.id} genres={e.genres} platforms={e.platforms} image={e.background_image} />
-        </Grid>
-       ))}
-      </GridBase>
-     )}
-    </Box>
+    <SearchBar />
+    <Grid container spacing={{ xs: 2, md: 2 }} columns={{ xs: 1, sm: 8, md: 12 }}>
+     <Grid item xs={1} sm={8} md={4}>
+      {isLoading ? <Skeleton animation="wave" variant="rounded" height={150} /> : <FilterSection platformData={platformData} genreData={genreData} tagsData={tagsData} loading={loading} />}
+     </Grid>
+     <Grid item xs={1} sm={8} md={8}>
+      {isLoading ? (
+       <Box
+        sx={{
+         display: "flex",
+         flexDirection: "column",
+         gap: 2,
+        }}
+       >
+        <Skeleton animation="wave" variant="rounded" height={150} />
+        <Skeleton animation="wave" variant="rounded" height={150} />
+        <Skeleton animation="wave" variant="rounded" height={150} />
+        <Skeleton animation="wave" variant="rounded" height={150} />
+        <Skeleton animation="wave" variant="rounded" height={150} />
+        <Skeleton animation="wave" variant="rounded" height={150} />
+        <Skeleton animation="wave" variant="rounded" height={150} />
+        <Skeleton animation="wave" variant="rounded" height={150} />
+        <Skeleton animation="wave" variant="rounded" height={150} />
+       </Box>
+      ) : (
+       <>
+        <ListSection dataResults={dataResults} layout={layout} />
+       </>
+      )}
+     </Grid>
+    </Grid>
    </Box>
   </>
  );
