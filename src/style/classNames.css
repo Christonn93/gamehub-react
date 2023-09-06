@@ -6,6 +6,31 @@
 }
 
 .platform-emblem {
-    max-width: 30px;
-    background-color: #fff !important;
+ max-width: 30px;
+ background-color: #fff !important;
+}
+
+.mainImage,
+.imageCarousel {
+ width: fit-content;
+ max-width: 570px;
+}
+
+.videoCarousel {
+ width: 100%;
+}
+
+.videoController {
+ width: 100%;
+}
+
+.gameIcon {
+ max-width: 40px;
+}
+
+@media only screen and (max-width: 600px) {
+ .mainImage,
+ .imageCarousel {
+  max-width: 320px;
+ }
 }

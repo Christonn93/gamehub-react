@@ -1,12 +1,21 @@
 // Importing React
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 // Importing MUI
-import { Box, Button, Card, Paper, Rating, Stack, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 // Importing functions
 import useApi from "../hooks/useApi";
+
+// Importing components
+import HeaderSection from "../components/GameDetails/HeaderSection";
+import IconSection from "../components/GameDetails/IconSection";
+import ImageSection from "../components/GameDetails/ImageSection";
+import DescriptionSection from "../components/GameDetails/DescriptionSection";
+import SimilarGamesSection from "../components/GameDetails/SimilarGamesSection";
+import RatingSection from "../components/GameDetails/RatingSection";
+import VideoSection from "../components/GameDetails/VideoSection";
 
 const GameDetails = () => {
  let { id } = useParams();
@@ -14,6 +23,7 @@ const GameDetails = () => {
 
  const { data, isLoading, isError } = useApi(`/games/${id}?key=${apiKey}`, "GET");
  const { data: imageData, isLoading: imageIsLoading, isError: imageError } = useApi(`/games/${id}/screenshots?key=${apiKey}`, "GET");
+ const { data: videoData } = useApi(`/games/${id}/movies?key=${apiKey}`, "GET");
 
  // Destructuring response data
  const { name, description_raw, ratings, tags, website, genres, esrb_rating, released, updated, platforms, developers, publishers, rating, rating_top, background_image, background_image_additional } =
@@ -24,63 +34,55 @@ const GameDetails = () => {
  if (platforms === undefined) return null;
 
  // Setting var value
- const { name: developers_name } = developers[0];
- const { name: publishers_name } = publishers[0];
- const platformName = platforms.flatMap((n) => n.platform.name);
+ const gameData = {
+  developers,
+  publishers,
+  released,
+  tags,
+  genres,
+  esrb_rating,
+  updated,
+  website,
+  platforms,
+ };
+
+ const backgroundImage = {
+  position: "fixed", // or 'absolute' depending on your layout
+  top: 0,
+  left: 0,
+  width: "100%",
+  height: "100%",
+  backgroundImage: `url(${background_image})`,
+  zIndex: "-1",
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  opacity: 0.3,
+  backgroundSize: "cover",
+  backgroundRepeat: "no-repeat",
+ };
 
  return (
   <>
-   <Box>
-    <Box>
-     <Typography variant="h1" component={"h1"}>
-      {name}
-     </Typography>
-    </Box>
-    <Box
-     mt={1}
-     sx={{
-      display: "flex",
-      gap: 2,
-     }}
-    >
-     <img src={background_image} alt="" height={"300"} />
-    </Box>
-
-    <Rating name="Rating" value={rating} max={rating_top} precision={0.5} readOnly />
-
-    <Box mt={1} maxWidth={"550px"}>
-     <Typography variant="body1" mt={1}>
-      {description_raw}
-     </Typography>
-     <Button variant="outlined" color="success" component={Link} to={website} sx={{ marginTop: 2 }}>
-      Read more about the game
-     </Button>
-    </Box>
-
-    <Box mt={1} p={1} sx={{
-        display: "flex",
-        gap: 1
-    }}>
-     <Box>
-      <Typography variant="body1">Released: {released}</Typography>
-      <Typography variant="body1">Available on: {platformName.join(", ")}</Typography>
-      <Typography variant="body1">Developer: {developers_name}</Typography>
-      <Typography variant="body1">Publishers: {publishers_name}</Typography>
-     </Box>
-     <Box>
-      <Typography variant="body1">Released: {released}</Typography>
-      <Typography variant="body1">Available on: {platformName.join(", ")}</Typography>
-      <Typography variant="body1">Developer: {developers_name}</Typography>
-      <Typography variant="body1">Publishers: {publishers_name}</Typography>
-     </Box>
-    </Box>
-
-    <Box mt={1}>
-     <Typography variant="caption">
-      <i>updated: {updated}</i>
-     </Typography>
-    </Box>
+   <div style={backgroundImage}></div>
+   <Box
+    sx={{
+     display: "flex",
+     flexDirection: "column",
+     gap: 2,
+     marginTop: 2,
+     marginBottom: 1,
+    }}
+   >
+    <HeaderSection name={name} ratings={rating} maxRatings={rating_top} />
+    <ImageSection image={background_image_additional} images={imageData} />
+    <RatingSection data={ratings} />
+    <DescriptionSection description={description_raw} gameData={gameData} />
+    <VideoSection data={videoData} />
+    <SimilarGamesSection />
    </Box>
+   <Typography variant="body2" sx={{ textAlign: "center" }}>
+    Page last updated: {updated}
+   </Typography>
   </>
  );
 };

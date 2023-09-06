@@ -9,15 +9,16 @@ const Header = () => {
  return (
   <>
    <Box
-    sx={{
-     display: "flex",
-     justifyContent: "space-between",
-     alignItems: "center",
-     p: 2,
-    }}
+sx={{
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexWrap: "wrap",
+    p: 2,
+   }}
    >
     <Box id="section-one">
-     <img src={Logo} height={100} alt="Logo"/>
+     <img src={Logo} height={100} alt="Logo" />
     </Box>
     <Box id="section-two">
      <Navbar />
@@ -28,3 +29,5 @@ const Header = () => {
 };
 
 export default Header;
+
+

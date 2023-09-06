@@ -18,6 +18,7 @@ const Footer = () => {
      display: "flex",
      alignItems: "center",
      justifyContent: "center",
+     flexWrap: "wrap",
      gap: 1,
      p: 2,
     }}
