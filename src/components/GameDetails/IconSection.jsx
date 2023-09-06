@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Box, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 
 import PS4Icon from "../../assets/platform_images/icons8-playstation.svg";
 import PcIcon from "../../assets/platform_images/icons8-windows.svg";

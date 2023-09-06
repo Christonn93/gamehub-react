@@ -10,7 +10,6 @@ import useApi from "../hooks/useApi";
 
 // Importing components
 import HeaderSection from "../components/GameDetails/HeaderSection";
-import IconSection from "../components/GameDetails/IconSection";
 import ImageSection from "../components/GameDetails/ImageSection";
 import DescriptionSection from "../components/GameDetails/DescriptionSection";
 import SimilarGamesSection from "../components/GameDetails/SimilarGamesSection";
@@ -22,7 +21,7 @@ const GameDetails = () => {
  const apiKey = process.env.REACT_APP_API_KEY;
 
  const { data, isLoading, isError } = useApi(`/games/${id}?key=${apiKey}`, "GET");
- const { data: imageData, isLoading: imageIsLoading, isError: imageError } = useApi(`/games/${id}/screenshots?key=${apiKey}`, "GET");
+ const { data: imageData } = useApi(`/games/${id}/screenshots?key=${apiKey}`, "GET");
  const { data: videoData } = useApi(`/games/${id}/movies?key=${apiKey}`, "GET");
 
  // Destructuring response data
@@ -32,6 +31,9 @@ const GameDetails = () => {
  // Checking for undefined values
  if (developers === undefined) return null;
  if (platforms === undefined) return null;
+
+ if (isLoading) return;
+ if (isError) throw isError;
 
  // Setting var value
  const gameData = {
@@ -55,10 +57,9 @@ const GameDetails = () => {
   backgroundImage: `url(${background_image})`,
   zIndex: "-1",
   backgroundSize: "cover",
+  backgroundRepeat: "no-repeat",
   backgroundPosition: "center",
   opacity: 0.3,
-  backgroundSize: "cover",
-  backgroundRepeat: "no-repeat",
  };
 
  return (

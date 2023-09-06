@@ -20,7 +20,7 @@ const RatingSection = ({ data }) => {
      if (e.title === "meh") color = "warning";
      if (e.title === "skip") color = "error";
 
-     return <Chip color="primary" icon={<CircleIcon color={color} />} label={`${e.title}` + "  " + `${e.count}`} variant="filled" />;
+     return <Chip color="primary" icon={<CircleIcon color={color} />} label={e.title + "  " + e.count} variant="filled" />;
     })}
    </Box>
   </>
