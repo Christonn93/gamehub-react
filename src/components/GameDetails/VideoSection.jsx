@@ -3,7 +3,7 @@ import { Carousel } from "react-responsive-carousel";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
-import { Box, Typography } from "@mui/material";
+import { Alert, Box, Typography } from "@mui/material";
 
 const VideoSection = ({ data }) => {
  const videoArray = data.results;
@@ -22,9 +22,7 @@ console.log(videoArray)
    >
     <Typography variant="h4">Game Trailers</Typography>
     {videoArray.length === 0 ? (
-     <>
-      <Typography variant="body1" color={"error"}>There was no videos found</Typography>
-     </>
+        <Alert severity="error">There was no videos found</Alert> 
     ) : (
      <Carousel className="videoCarousel" showIndicators={false}>
       {videoArray.map((e) => {
